@@ -1,23 +1,22 @@
 package com.tracker.daoImpl;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
+import org.bson.Document;
+
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.tracker.DB.MongooConnect;
 import com.tracker.dao.IUser;
 import com.tracker.model.User;
 
 public class UserDaoImpl implements IUser {
 
-	private DBObject getUserDetails(String username) {
+	private Document getUserDetails(String username) {
 		// get database and
-		DB database = MongooConnect.getInstance().init();
-		DBCollection collection = database.getCollection("authentication");
-		DBObject query = new BasicDBObject("username", username);
-		DBCursor cursor = collection.find(query);
-		DBObject myDoc = cursor.one();
+		MongoDatabase database = MongooConnect.getInstance().init();
+		MongoCollection<Document> collection = database.getCollection("authentication");
+		FindIterable<Document> cursor = collection.find(new Document("username", username));
+		Document myDoc = cursor.first();
 		return myDoc;
 	}
 	
@@ -25,7 +24,7 @@ public class UserDaoImpl implements IUser {
 	public boolean authenticate(User userDetails) {
 		String userName = userDetails.getUserName();
 		String password = userDetails.getPassword();
-		DBObject dbObject = getUserDetails(userName);
+		Document dbObject = getUserDetails(userName);
 		final String dbUser = (String) dbObject.get("username");
 		final String dbPassword = (String)  dbObject.get("password");
 		if(userName.equalsIgnoreCase(dbUser) && password.equalsIgnoreCase(dbPassword)) {

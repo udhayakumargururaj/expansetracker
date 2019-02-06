@@ -1,6 +1,10 @@
 package com.tracker.dao;
 
+import com.tracker.model.User;
+
 public interface IUser {
 
-	public String getUserDetails();
+	public boolean authenticate(User userDetail);
+	
+	
 }

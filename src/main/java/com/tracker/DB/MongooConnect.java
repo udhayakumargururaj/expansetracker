@@ -1,8 +1,8 @@
 package com.tracker.DB;
 
-import com.mongodb.DB;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoDatabase;
 
 public class MongooConnect {
 	
@@ -20,10 +20,10 @@ public class MongooConnect {
 		return CONNECT;
 	}
 	
-	public static DB init(){
-		MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://admin:admin123@ds255924.mlab.com:55924/expansetracker"));
-		DB database = mongoClient.getDB("expansetracker");
-		
+	public static MongoDatabase init(){
+//		MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://admin:admin123@ds255924.mlab.com:55924/expansetracker"));
+		MongoClient mongoClient = MongoClients.create("mongodb://admin:admin123@ds255924.mlab.com:55924/expansetracker");
+		MongoDatabase database = mongoClient.getDatabase("expansetracker");
 		return database;
 	}
 	
