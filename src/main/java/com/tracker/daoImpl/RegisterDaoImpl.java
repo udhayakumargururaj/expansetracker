@@ -15,14 +15,14 @@ public class RegisterDaoImpl implements IRegister{
 	public String addNewUser(Register register) throws ApplicationException {
 		String result = "";
 		try{
-		MongoDatabase database = MongooConnect.getInstance().init();
-		MongoCollection<Document> collection = database.getCollection("dd");
-		Document document = new Document("mobile", register.getMobileNumber())
-							.append("username", register.getUserName())
-							.append("password", register.getPassword())
-							.append("email", register.getEmail());
-		collection.insertOne(document);
-		result = "Document inserted successfully";
+			MongoDatabase database = MongooConnect.getInstance().init();
+			MongoCollection<Document> collection = database.getCollection("dd");
+			Document document = new Document("mobile", register.getMobileNumber())
+					.append("username", register.getUserName())
+					.append("password", register.getPassword())
+					.append("email", register.getEmail());
+			collection.insertOne(document);
+			result = "Document inserted successfully";
 		} catch(Exception e) {
 			throw new ApplicationException("There are some issues on inserting the document");
 		}
