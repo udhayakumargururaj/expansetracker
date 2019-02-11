@@ -3,16 +3,34 @@ package com.tracker.Exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason="There is an issue in completing request")
-public class ApplicationException extends Exception {
-	
+@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+public class ApplicationException extends RuntimeException {
+	private String message;
+	/**
+	 * @return the message
+	 */
+	public String getMessage() {
+		return message;
+	}
+
+
+	/**
+	 * @param message the message to set
+	 */
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+
 	public ApplicationException(String errorMsg, Throwable err) {
 		super(errorMsg, err);
+		this.setMessage(errorMsg);
 	}
 	
 	
 	public ApplicationException(String errorMsg) {
 		super(errorMsg);
+		this.setMessage(errorMsg);
 	}
 	
 

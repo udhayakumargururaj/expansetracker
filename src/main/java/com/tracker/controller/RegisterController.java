@@ -21,7 +21,7 @@ public class RegisterController {
 		try {
 			result = registerBO.addNewUser(userInfo);
 		} catch(ApplicationException exception) {
-			exception.printStackTrace();
+			throw new ApplicationException(exception.getMessage());
 		}catch (Exception e) {
 			result = "Issue on Document Insert";
 			e.printStackTrace();
